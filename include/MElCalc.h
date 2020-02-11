@@ -1,11 +1,11 @@
-#ifndef MElCalculator_H
-#define MElCalculator_H
+#ifndef MElCalc_H
+#define MElCalc_H
 
 #include <utility>
 #include "CFourVector.h"
 #include "MElParticle.h"
 
-class MElCalculator {
+class MElCalc {
  public:
   static double getEta2PiMEl2(
       const CFourVector&,

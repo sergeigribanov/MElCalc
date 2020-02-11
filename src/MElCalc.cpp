@@ -1,28 +1,28 @@
 
 #include <iostream>
-#include "MElCalculator.h"
+#include "MElCalc.h"
 
-const MElParticle MElCalculator::omegaMeson_ =
+const MElParticle MElCalc::omegaMeson_ =
     MElParticle(223);
-const MElParticle MElCalculator::piChMeson_ =
+const MElParticle MElCalc::piChMeson_ =
     MElParticle(211);
-const MElParticle MElCalculator::rho0Meson_ =
-  MElParticle(113, &MElCalculator::getRho770Width);
-const MElParticle MElCalculator::rhoChMeson_ =
+const MElParticle MElCalc::rho0Meson_ =
+  MElParticle(113, &MElCalc::getRho770Width);
+const MElParticle MElCalc::rhoChMeson_ =
     MElParticle(213);
 
-double MElCalculator::getRho770Width(
+double MElCalc::getRho770Width(
     double q2, double massRho770, double widthOnMassRho770, double*) {
   double mass2Rho770 = massRho770 * massRho770;
   return widthOnMassRho770 * mass2Rho770 / q2 *
     pow(p2_pi(q2) / p2_pi(mass2Rho770), 1.5);
 }
 
-double MElCalculator::p2_pi(double q2) {
+double MElCalc::p2_pi(double q2) {
   return 0.25 * q2 - piChMeson_.getMass() * piChMeson_.getMass();
 }
 
-double MElCalculator::getEta2PiMEl2(
+double MElCalc::getEta2PiMEl2(
     const CFourVector& p_eta,
     const CFourVector& p_pimi,
     const CFourVector& p_pipl) {
@@ -35,7 +35,7 @@ double MElCalculator::getEta2PiMEl2(
   return electron_current_conv(l1, l2, conv) * norm(prop);
 }
 
-double MElCalculator::getOmega2PiMEl2(
+double MElCalc::getOmega2PiMEl2(
     const std::pair<CFourVector, CFourVector>& p_pimi,
     const std::pair<CFourVector, CFourVector>& p_pipl,
     const CFourVector& p_pi0) {
@@ -50,7 +50,7 @@ double MElCalculator::getOmega2PiMEl2(
       l1, l2, getOmega2Pi_A(p_lepton, p_pimi, p_pipl, p_pi0)));
 }
 
-CFourVector MElCalculator::getOmega2Pi_A(
+CFourVector MElCalc::getOmega2Pi_A(
     const CFourVector& p_lepton,
     const std::pair<CFourVector, CFourVector>& p_pimi,
     const std::pair<CFourVector, CFourVector>& p_pipl,
@@ -62,7 +62,7 @@ CFourVector MElCalculator::getOmega2Pi_A(
       getOmega2Pi_B(p_lepton, p_pimi.second, p_pipl.second, p_pi0);
 }
 
-CFourVector MElCalculator::getOmega2Pi_B(
+CFourVector MElCalc::getOmega2Pi_B(
     const CFourVector& p_lepton,
     const CFourVector& p_pimi,
     const CFourVector& p_pipl,
@@ -76,7 +76,7 @@ CFourVector MElCalculator::getOmega2Pi_B(
       (p_lepton * p_omega) * vC;
 }
 
-CFourVector MElCalculator::getOmega2Pi_C(
+CFourVector MElCalc::getOmega2Pi_C(
     double p2_omega,
     const CFourVector& p_pimi,
     const CFourVector& p_pipl,
