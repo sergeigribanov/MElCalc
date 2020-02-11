@@ -2,8 +2,8 @@
 #define MElCalc_H
 
 #include <utility>
-#include "CFourVector.h"
-#include "MElParticle.h"
+#include <MEUtils/CFourVector.hpp>
+#include <MEUtils/MElParticle.hpp>
 
 class MElCalc {
  public:

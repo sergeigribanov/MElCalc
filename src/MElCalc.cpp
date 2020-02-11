@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "MElCalc.h"
+#include "MElCalc.hpp"
 
 const MElParticle MElCalc::omegaMeson_ =
     MElParticle(223);

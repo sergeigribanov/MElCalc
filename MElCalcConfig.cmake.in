@@ -3,4 +3,4 @@
 include ( "${CMAKE_CURRENT_LIST_DIR}/MElCalcTargets.cmake" )
 set(MElCalc_ROOT_DIR @CMAKE_INSTALL_PREFIX@)
 set(MElCalc_INCLUDE_DIRS ${MElCalc_ROOT_DIR}/include)
-set(MElCalc_LIBRARIES ${MElCalc_ROOT_DIR}/lib/libccgo.so)
+set(MElCalc_LIBRARIES ${MElCalc_ROOT_DIR}/lib/libMElCalc.so)

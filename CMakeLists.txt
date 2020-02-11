@@ -4,13 +4,13 @@ find_package(MEUtils REQUIRED)
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 find_package(ROOT REQUIRED COMPONENTS RIO Net Core Eve EG Geom Ged RGL)
 include(${ROOT_USE_FILE})
-file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp)
 file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 add_library(MElCalc SHARED ${SOURCES})
 target_include_directories(MElCalc
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:include/MElCalc>
   PRIVATE
   ${MEUtils_INCLUDE_DIRS})
 target_link_libraries(MElCalc
@@ -24,7 +24,7 @@ set_target_properties(MElCalc
 install(TARGETS MElCalc
   EXPORT MElCalcTargets
   LIBRARY DESTINATION lib
-  PUBLIC_HEADER DESTINATION include)
+  PUBLIC_HEADER DESTINATION include/MElCalc)
 install(EXPORT MElCalcTargets
   FILE MElCalcTargets.cmake
   DESTINATION lib/cmake)
