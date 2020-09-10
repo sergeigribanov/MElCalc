@@ -17,13 +17,17 @@ class MElCalc {
     const CFourVector&);
 
  private:
+  static const double f0Phase_;
   static const MElParticle omegaMeson_;
   static const MElParticle piChMeson_;
   static const MElParticle rho0Meson_;
   static const MElParticle rhoChMeson_;
+  static const MElParticle f0Meson_;
   static double getRho770Width(
       double, double, double, double*);
   static double p2_pi(double);
+  static std::complex<double> getF0Factor(const CFourVector&,
+					  const CFourVector&);
   static CFourVector getOmega2Pi_A(
       const CFourVector&,
       const std::pair<CFourVector, CFourVector>&,

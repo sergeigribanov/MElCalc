@@ -1,7 +1,8 @@
-
+#include <cmath>
 #include <iostream>
 #include "MElCalc.hpp"
 
+const double MElCalc::f0Phase_=0.0;
 const MElParticle MElCalc::omegaMeson_ =
     MElParticle(223);
 const MElParticle MElCalc::piChMeson_ =
@@ -10,6 +11,8 @@ const MElParticle MElCalc::rho0Meson_ =
   MElParticle(113, &MElCalc::getRho770Width);
 const MElParticle MElCalc::rhoChMeson_ =
     MElParticle(213);
+const MElParticle MElCalc::f0Meson_ =
+  MElParticle(0.99, 0.5);
 
 double MElCalc::getRho770Width(
     double q2, double massRho770, double widthOnMassRho770, double*) {
@@ -46,8 +49,14 @@ double MElCalc::getOmega2PiMEl2(
   cdouble energy = 0.5 * p_lepton[3];
   CFourVector l1(0., 0., energy, energy);
   CFourVector l2(0., 0., -energy, energy);
-  return abs(electron_current_conv(
-      l1, l2, getOmega2Pi_A(p_lepton, p_pimi, p_pipl, p_pi0)));
+  return std::abs(electron_current_conv
+		  (l1, l2, getOmega2Pi_A(p_lepton, p_pimi, p_pipl, p_pi0)));
+}
+
+std::complex<double> MElCalc::getF0Factor(const CFourVector& pi_mi,
+					  const CFourVector& pi_pl) {
+  return 1. + std::exp(std::complex<double>(0, 1) * f0Phase_) *
+    f0Meson_.getPropagator((pi_mi + pi_pl).getM2().real());
 }
 
 CFourVector MElCalc::getOmega2Pi_A(
@@ -56,10 +65,14 @@ CFourVector MElCalc::getOmega2Pi_A(
     const std::pair<CFourVector, CFourVector>& p_pipl,
     const CFourVector& p_pi0) {
   return
-      getOmega2Pi_B(p_lepton, p_pimi.first, p_pipl.first, p_pi0) +
-      getOmega2Pi_B(p_lepton, p_pimi.first, p_pipl.second, p_pi0) +
-      getOmega2Pi_B(p_lepton, p_pimi.second, p_pipl.first, p_pi0) +
-      getOmega2Pi_B(p_lepton, p_pimi.second, p_pipl.second, p_pi0);
+    getOmega2Pi_B(p_lepton, p_pimi.first, p_pipl.first, p_pi0) *
+    getF0Factor(p_pimi.second, p_pipl.second) +
+    getOmega2Pi_B(p_lepton, p_pimi.first, p_pipl.second, p_pi0) *
+    getF0Factor(p_pimi.second, p_pipl.first) +
+    getOmega2Pi_B(p_lepton, p_pimi.second, p_pipl.first, p_pi0) *
+    getF0Factor(p_pimi.first, p_pipl.second) +
+    getOmega2Pi_B(p_lepton, p_pimi.second, p_pipl.second, p_pi0) *
+    getF0Factor(p_pimi.first, p_pipl.first);
 }
 
 CFourVector MElCalc::getOmega2Pi_B(
